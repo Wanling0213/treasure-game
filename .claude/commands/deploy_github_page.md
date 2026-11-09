@@ -23,7 +23,7 @@ Deploy this project to GitHub Pages. Check every prerequisite first and guide th
 
    Do not change the regular `build` script or `vite.config.ts`, because the Vercel deploy needs the default base `/`. Commit and push these changes.
 
-9. **Deploy.** Run `npm run deploy:gh`. If the build fails, fix the errors and run it again.
+9. **Deploy.** Run `npm run deploy:gh`. If the build fails, fix the errors and run it again. On the first deploy, `gh-pages` starts from `main` and leaves its dotfiles (such as `.claude/` and `.gitignore`) on the `gh-pages` branch. Check with `gh api "repos/<username>/<repo>/git/trees/gh-pages?recursive=1" --jq '.tree[].path'`, and if any appear, run `npx gh-pages -d build --dotfiles --remove "{.claude/**,.gitignore}"` once to clean them out.
 
 10. **Enable Pages.** If `gh api repos/<username>/<repo>/pages` returns 404, run `gh api -X POST repos/<username>/<repo>/pages -f "source[branch]=gh-pages" -f "source[path]=/"`.
 
